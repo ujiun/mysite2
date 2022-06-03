@@ -2,8 +2,8 @@
 <%@	page import="com.javaex.vo.UserVo" %>
 
 <%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
-	System.out.println(authUser);
+	UserVo authUser = (UserVo)session.getAttribute("authUser");	//브라우저 닫아도 메모리의 세션아이디 사라지는건 
+	System.out.println(authUser);								//아니지만(설정 시간 뒤 삭제) 아무도 접근할 수 없다, 세션아이디 새로발급
 %>
 
 
@@ -34,7 +34,7 @@
 				<ul>
 					<li><%=authUser.getName() %> 님 안녕하세요^^</li>
 					<li><a href="/mysite2/user?action=logout" class="btn_s">로그아웃</a></li>
-					<li><a href="" class="btn_s">회원정보수정</a></li>
+					<li><a href="/mysite2/user?action=modifyForm" class="btn_s">회원정보수정</a></li>
 				</ul>
 			<%}%>
 			
