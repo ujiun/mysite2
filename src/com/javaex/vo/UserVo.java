@@ -13,17 +13,6 @@ public class UserVo {
 	//생성자
 	public UserVo() {
 	}
-	
-	
-	
-	public UserVo(String id, String name, String password, String gender) {
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.gender = gender;
-	}
-
-
 
 	public UserVo(String password, String name, String gender, int no) {
 		this.password = password;
@@ -32,6 +21,14 @@ public class UserVo {
 		this.no = no;
 	}
 
+		
+	public UserVo(String id, String name, String password, String gender) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.gender = gender;
+	}
+	
 
 	public UserVo(int no, String id, String name, String password, String gender) {
 		this.no = no;

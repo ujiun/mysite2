@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.javaex.vo.PersonVo;
 import com.javaex.vo.UserVo;
 
 public class UserDao {
@@ -87,7 +86,7 @@ public class UserDao {
 		return count;
 	}
 	
-	//사용자 정보 가져오기(로그인시 사용)
+	//사용자 정보 가져오기(로그인시 사용) no ,name
 	public UserVo getUser(UserVo userVo) {
 		UserVo authUser = null;
 		getConnection();
@@ -97,10 +96,7 @@ public class UserDao {
 			//SQL문 준비
 			String query = "";
 			query += " select  no, ";
-			query += "         id, ";
 			query += "         name, ";
-			query += "         password, ";
-			query += "         gender ";
 			query += " from users ";
 			query += " where id = ? ";
 			query += " and password = ? ";
@@ -141,43 +137,94 @@ public class UserDao {
 		return authUser;
 	}
 	
-	// 회원정보 수정
-	public int userUpdate(UserVo userVo) {
-		int count = 0;
-		getConnection();
+	// 사용자 정보 가져오기(회원정보 수정폼, no id password name gender)
+	public UserVo getUser(int no) {
+		UserVo userVo = null;
+
+		this.getConnection();
 
 		try {
 
 			// 3. SQL문 준비 / 바인딩 / 실행
-			String query = ""; 
-			query += " update users ";
-			query += " set  password = ?, ";
-			query += "      name = ?, ";
-			query += "      gender = ? ";
+			// SQL문 준비
+			String query = "";
+			query += " select  no, ";
+			query += "         id, ";
+			query += "         password, ";
+			query += "         name, ";
+			query += "         gender ";
+			query += " from users ";
 			query += " where no = ? ";
 
-			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+			// 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
 
-			pstmt.setString(1, userVo.getPassword()); 
-			pstmt.setString(2, userVo.getName());  
-			pstmt.setString(3, userVo.getGender()); 
-			pstmt.setInt(4, userVo.getNo()); 
-
-			count = pstmt.executeUpdate(); // 쿼리문 실행
+			// 실행
+			rs = pstmt.executeQuery();
 
 			// 4.결과처리
-			
-			System.out.println(count + "회원정보가 수정되었습니다.");
+			while (rs.next()) {
+				int userno = rs.getInt("no");
+				String id = rs.getString("id");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				String gender = rs.getString("gender");
+
+				userVo = new UserVo(userno, id, name, password, gender);
+			}
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 
-		close();
-		return count;
+		this.close();
+
+		return userVo;
 	}
 	
-	
-	
+	// 사용자 정보 수정하기
+	public int update(UserVo userVo) {
+		
+		int count = -1;
+		
+		this.getConnection();
+		
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// SQL문 준비
+			String query = "";
+			query += " update users ";
+			query += " set password = ?, ";
+			query += "     name = ?, ";
+			query += "     gender = ? ";
+			query += " where no = ? ";
+			System.out.println(query);
+			
+			// 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userVo.getPassword());
+			pstmt.setString(2, userVo.getName());
+			pstmt.setString(3, userVo.getGender());
+			pstmt.setInt(4, userVo.getNo());
+			
+			// 실행
+			count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println(count + "건이 수정되었습니다.");
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		
+		this.close();
+		
+		return count;
+		
+		
+	}
 	
 }
