@@ -103,7 +103,7 @@ public class UserController extends HttpServlet {
 		} else if ("modifyForm".equals(action)) {//수정폼
 			System.out.println("UserController>modifyForm");
 			
-			//로그인한 사용자의  no 값을 세션에서 가져오기
+			//로그인한 사용자의  no 값을 세션에서 가져오기(세션에는 최소한의 값만)
 			HttpSession session = request.getSession();
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
 			int no = authUser.getNo();
