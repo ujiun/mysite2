@@ -86,55 +86,50 @@ public class UserDao {
 		return count;
 	}
 	
-	//사용자 정보 가져오기(로그인시 사용) no ,name
+	// 사용자 정보 가져오기(로그인시 사용, no name)
 	public UserVo getUser(UserVo userVo) {
 		UserVo authUser = null;
-		getConnection();
-		
+
+		this.getConnection();
+
 		try {
-		    // 3. SQL문 준비 / 바인딩 / 실행
-			//SQL문 준비
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// SQL문 준비
 			String query = "";
 			query += " select  no, ";
-			query += "         name, ";
+			query += "         name ";
 			query += " from users ";
 			query += " where id = ? ";
 			query += " and password = ? ";
 			System.out.println(query);
-			
-			//바인딩
-			pstmt = conn.prepareStatement(query); 
-			pstmt.setString(1, userVo.getId()); 
-			pstmt.setString(2, userVo.getPassword()); 
-			
-			
-			//실행
+
+			// 바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getPassword());
+
+			// 실행
 			rs = pstmt.executeQuery();
-			
-			//결과처리
-			while(rs.next()) {
+
+			// 4.결과처리
+			while (rs.next()) {
 				int no = rs.getInt("no");
-				String id = rs.getString("id" );
-				String name = rs.getString("name");		
-				String password = rs.getString("password");
-				String gender = rs.getString("gender");	
-				
+				String name = rs.getString("name");
+
 				authUser = new UserVo();
 				authUser.setNo(no);
-				authUser.setId(id);
 				authUser.setName(name);
-				authUser.setPassword(password);
-				authUser.setGender(gender);
 			}
-			
+
 		} catch (SQLException e) {
-		    System.out.println("error:" + e);
+			System.out.println("error:" + e);
 		}
-		
-		close();
-		
-		System.out.println(authUser);
+
+		this.close();
+
 		return authUser;
+
 	}
 	
 	// 사용자 정보 가져오기(회원정보 수정폼, no id password name gender)
