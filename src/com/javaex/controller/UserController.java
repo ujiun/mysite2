@@ -80,6 +80,7 @@ public class UserController extends HttpServlet {
 			// authUser null이면 --> 로그인 실패
 			if (authUser == null) {
 				System.out.println("로그인 실패");
+				
 			} else {
 				System.out.println("로그인 성공");
 				HttpSession session = request.getSession();
@@ -103,18 +104,28 @@ public class UserController extends HttpServlet {
 		} else if ("modifyForm".equals(action)) {//수정폼
 			System.out.println("UserController>modifyForm");
 			
-			//로그인한 사용자의  no 값을 세션에서 가져오기(세션에는 최소한의 값만)
 			HttpSession session = request.getSession();
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			int no = authUser.getNo();
 			
-			//no로 사용자 정보 가져오기
-			UserDao userDao = new UserDao();
-			UserVo userVo = userDao.getUser(no);  //no id password name gender
-			
-			// request 의 attribute 에 userVo 는 넣어서 포워딩
-			request.setAttribute("userVo", userVo);
-			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
+			if(authUser == null) {
+				//로그인하지 않은 사용자일시 loginForm으로 리다이렉트
+				WebUtil.redirect(request, response, "/mysite2/user?action=loginForm");
+			}else {
+				System.out.println(authUser);
+				//로그인한 사용자의  no 값을 세션에서 가져오기(세션에는 최소한의 값만)
+				session = request.getSession();
+				authUser = (UserVo)session.getAttribute("authUser");
+				int no = authUser.getNo();
+				
+				//no로 사용자 정보 가져오기
+				UserDao userDao = new UserDao();
+				UserVo userVo = userDao.getUser(no);  //no id password name gender
+				
+				// request 의 attribute 에 userVo 는 넣어서 포워딩
+				request.setAttribute("userVo", userVo);
+				WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
+			}
+
 			
 		} else if ("modify".equals(action)) {//수정
 			System.out.println("UserController>modify");
