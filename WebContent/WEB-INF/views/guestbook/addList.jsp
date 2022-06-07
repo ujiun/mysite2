@@ -2,15 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-<%@ page import="com.javaex.vo.GuestVo" %>
-<%@	page import="com.javaex.vo.UserVo" %>
-
-<%@ page import="java.util.List"%>
-
-<%
-	List<GuestVo> guestList = (List<GuestVo>)request.getAttribute("gList"); //형변환
-%>
-
 
 <!DOCTYPE html>
 <html>
