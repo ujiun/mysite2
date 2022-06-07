@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <%@ page import="com.javaex.vo.GuestVo" %>
 <%@	page import="com.javaex.vo.UserVo" %>
@@ -25,7 +27,7 @@
 	<div id="wrap">
 
 		<!-- header -->
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<!-- //header -->
 
 		<div id="nav">
@@ -73,9 +75,9 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<th><label class="form-text" for="input-uname">이름</label></td>
+									<th><label class="form-text" for="input-uname">이름</label></th>
 									<td><input id="input-uname" type="text" name="name"></td>
-									<th><label class="form-text" for="input-pass">패스워드</label></td>
+									<th><label class="form-text" for="input-pass">패스워드</label></th>
 									<td><input id="input-pass"type="password" name="pass"></td>
 								</tr>
 								<tr>
@@ -91,7 +93,7 @@
 						<input type="text" name="action" value="add">
 					</form>	
 
-					<%for(int i=0; i<guestList.size(); i++) {%>
+					<c:forEach items="${gList }" var="guest">
 						<table class="guestRead">
 							<colgroup>
 									<col style="width: 10%;">
@@ -100,16 +102,17 @@
 									<col style="width: 10%;">
 							</colgroup>
 							<tr>
-								<td><%=guestList.get(i).getNo() %></td>
-								<td><%=guestList.get(i).getName() %></td>
-								<td><%=guestList.get(i).getRegDate() %></td>
-								<td><a href="./gbc?action=deleteForm&no=<%=guestList.get(i).getNo()%>">[삭제]</a></td>
+								<td>${guest.no }</td>
+								<td>${guest.name }</td>
+								<td>${guest.regDate }</td>
+								<td><a href="./gbc?action=deleteForm&no=${guest.no }">[삭제]</a></td>
 							</tr>
 							<tr>
-								<td colspan=4 class="text-left"><%=guestList.get(i).getContent()%></td>
+								<td colspan=4 class="text-left">${guest.content }</td>
 							</tr>
 						</table>
-					<%}%>
+					</c:forEach>
+
 					<!-- //guestRead -->
 					
 				</div>
@@ -121,7 +124,7 @@
 		<!-- //container  -->
 
 		<!-- footer -->		
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
