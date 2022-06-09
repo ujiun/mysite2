@@ -18,25 +18,13 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<!-- //header -->
 		
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
-			</ul>
-		</div>
+		<!-- //nav -->
+		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 		<!-- //nav -->
 
 		<div id="container" class="clearfix">
-			<div id="aside">
-				<h2>회원</h2>
-				<ul>
-					<li>회원정보</li>
-					<li>로그인</li>
-					<li>회원가입</li>
-				</ul>
-			</div>
+			<!-- //aside -->
+			<c:import url="/WEB-INF/views/includes/aside.jsp"></c:import>
 			<!-- //aside -->
 
 			<div id="content">
@@ -60,7 +48,7 @@
 						<p class="text-large bold">
 							회원가입을 축하합니다.<br>
 							<br>
-							<a href="/mysite2/user?action=loginForm" >[로그인하기]</a>
+							<a href="./user?action=loginForm" >[로그인하기]</a>
 						</p>
 							
 					</div>

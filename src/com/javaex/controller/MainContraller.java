@@ -22,6 +22,7 @@ public class MainContraller extends HttpServlet {
 	
 	//메소드-일반
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//코드
 		System.out.println("MainController");
 		

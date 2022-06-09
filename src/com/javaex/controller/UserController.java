@@ -17,9 +17,11 @@ import com.javaex.vo.UserVo;
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//포스트 방식일때 한글깨짐 방지
+		request.setCharacterEncoding("UTF-8");
+		
 		// action을 꺼낸다
 		String action = request.getParameter("action");
 		// System.out.println(action);
@@ -80,6 +82,7 @@ public class UserController extends HttpServlet {
 			// authUser null이면 --> 로그인 실패
 			if (authUser == null) {
 				System.out.println("로그인 실패");
+				WebUtil.redirect(request, response, "/mysite2/main");
 				
 			} else {
 				System.out.println("로그인 성공");
