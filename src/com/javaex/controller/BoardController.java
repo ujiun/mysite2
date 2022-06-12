@@ -65,6 +65,8 @@ public class BoardController extends HttpServlet {
 			authUser = (UserVo)session.getAttribute("authUser");
 			int userNo = authUser.getNo();
 			
+			//조회수 카운트
+			
 			//파라미터값 꺼내기
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
